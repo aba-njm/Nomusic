@@ -23,7 +23,7 @@ jobs:
         sudo apt-get update && sudo apt-get install -y ffmpeg
         pip install yt-dlp demucs telethon
 
-        - name: Run Video Processing
+    - name: Run Video Processing
       env:
         API_ID: ${{ secrets.API_ID }}
         API_HASH: ${{ secrets.API_HASH }}
