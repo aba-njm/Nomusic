@@ -1,0 +1,33 @@
+name: Clean Video Audio
+on:
+  workflow_dispatch:
+    inputs:
+      video_url:
+        description: 'أدخل رابط الفيديو هنا'
+        required: true
+
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Install Tools & Dependencies
+      run: |
+        sudo apt-get update && sudo apt-get install -y ffmpeg
+        pip install yt-dlp demucs telethon
+
+    - name: Run Video Processing
+      env:
+        API_ID: ${{ secrets.API_ID }}
+        API_HASH: ${{ secrets.API_HASH }}
+        BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        CHAT_ID: ${{ secrets.CHAT_ID }}
+        VIDEO_URL: ${{ github.event.inputs.video_url }}
+      run: python clean.py
