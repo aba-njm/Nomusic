@@ -23,8 +23,8 @@ async def main():
         cookie_arg = ""
 
     print("📥 جاري تحميل الفيديو بجودة 720p...")
-    # تمرير حجة الكوكيز للأداة
-    os.system(f'yt-dlp {cookie_arg} -f "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/best[height<=720][ext=mp4]/best" --merge-output-format mp4 "{VIDEO_URL}" -o input_video.mp4')
+    # ⚡ تحديث: إضافة حزم الجافا سكريبت وتحديد Node لتجاوز تحديات يوتيوب الجديدة وحل الـ n challenge
+    os.system(f'yt-dlp {cookie_arg} --js-runtimes node --remote-components ejs:github -f "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/best[height<=720][ext=mp4]/best" --merge-output-format mp4 "{VIDEO_URL}" -o input_video.mp4')
     
     if not os.path.exists('input_video.mp4'):
         print("❌ فشل التحميل!")
