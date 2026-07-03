@@ -12,19 +12,26 @@ VIDEO_URL = os.environ['VIDEO_URL']
 YT_COOKIES = os.environ.get('YT_COOKIES', '')
 
 async def main():
-    # 🍪 إنشاء ملف الكوكيز بأمان عبر بايثون لتفادي مشاكل الـ Bash والرموز الخاصة
+    # 🍪 إنشاء ملف الكوكيز بأمان
     if YT_COOKIES.strip():
         with open('cookies.txt', 'w', encoding='utf-8') as f:
             f.write(YT_COOKIES)
-        print("🍪 تم حفظ ملف الكوكيز بأمان وبدون تلاعب بالرموز.")
+        print("🍪 تم حفظ ملف الكوكيز بأمان.")
         cookie_arg = "--cookies cookies.txt"
     else:
-        print("⚠️ تنبيه: لم يتم العثور على كوكيز، سيتم التحميل بدونها.")
         cookie_arg = ""
 
     print("📥 جاري تحميل الفيديو بجودة 720p...")
-    # ⚡ تحديث: إضافة حزم الجافا سكريبت وتحديد Node لتجاوز تحديات يوتيوب الجديدة وحل الـ n challenge
-    os.system(f'yt-dlp {cookie_arg} --js-runtimes node --remote-components ejs:github -f "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/best[height<=720][ext=mp4]/best" --merge-output-format mp4 "{VIDEO_URL}" -o input_video.mp4')
+    
+    # ⚡ تحديث: إضافة أوامر التمويه (أندرويد/آيفون) وفرض IPv4 لتجاوز الخطأ 403
+    dl_cmd = (
+        f'yt-dlp {cookie_arg} --rm-cache-dir --force-ipv4 '
+        f'--extractor-args "youtube:player_client=android,ios,web" '
+        f'--js-runtimes node --remote-components ejs:github '
+        f'-f "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/best[height<=720][ext=mp4]/best" '
+        f'--merge-output-format mp4 "{VIDEO_URL}" -o input_video.mp4'
+    )
+    os.system(dl_cmd)
     
     if not os.path.exists('input_video.mp4'):
         print("❌ فشل التحميل!")
