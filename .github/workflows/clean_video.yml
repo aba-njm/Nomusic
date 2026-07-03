@@ -23,7 +23,7 @@ jobs:
         sudo apt-get update && sudo apt-get install -y ffmpeg
         pip install yt-dlp demucs telethon
 
-    - name: Run Video Processing
+        - name: Run Video Processing
       env:
         API_ID: ${{ secrets.API_ID }}
         API_HASH: ${{ secrets.API_HASH }}
@@ -31,6 +31,4 @@ jobs:
         CHAT_ID: ${{ secrets.CHAT_ID }}
         VIDEO_URL: ${{ github.event.inputs.video_url }}
         YT_COOKIES: ${{ secrets.YT_COOKIES }}
-      run: |
-        echo "$YT_COOKIES" > cookies.txt
-        python clean.py
+      run: python clean.py
