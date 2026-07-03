@@ -21,7 +21,7 @@ jobs:
     - name: Install Tools & Dependencies
       run: |
         sudo apt-get update && sudo apt-get install -y ffmpeg
-        pip install -U --pre yt-dlp yt-dlp-ejs demucs telethon
+        pip install -U --pre yt-dlp yt-dlp-ejs demucs diffq telethon
 
     - name: Run Video Processing
       env:
